@@ -1,0 +1,28 @@
+name: Generate Snake
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Generate snake animation
+        uses: Platane/snk@v2
+        with:
+          github_user_name: XthianX
+          outputs: dist/snake.svg
+
+      - name: Push snake.svg to the output branch
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_branch: output
+          publish_dir: dist
